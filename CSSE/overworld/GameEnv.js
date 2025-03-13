@@ -56,9 +56,14 @@ class GameEnv {
      * Sets the canvas element and its 2D rendering context.
      */
     setCanvas() {
-        this.canvas = document.getElementById('gameCanvas');
-        this.ctx = this.canvas.getContext('2d');
+        this.canvas = document.getElementById("gameCanvas");
+        if (!this.canvas) {
+            console.error("Canvas element not found!");
+            return;
+        }
+        this.ctx = this.canvas.getContext("2d");
     }
+    
 
     /**
      * Sets the top offset based on the height of the header element.

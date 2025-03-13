@@ -1,74 +1,69 @@
 import GameControl from './GameControl.js';
 import GameLevelWater from "./GameLevelWater.js";
 import GameLevelDesert from "./GameLevelDesert.js";
+import InstructionsScreen from "./InstructionsScreen.js";
+import CharacterSelectionScreen from "./CharacterSelectionScreen.js";
+
 class Game {
-    // initialize user and launch GameControl 
     static main(environment) {
-
-        // setting Web Application path
         this.path = environment.path;
-
-        // setting Element IDs
         this.gameContainer = environment.gameContainer;
         this.gameCanvas = environment.gameCanvas;
-
-        // setting API environment variables 
         this.pythonURI = environment.pythonURI;
         this.javaURI = environment.javaURI;
         this.fetchOptions = environment.fetchOptions;
+        this.uid = null;
+        this.id = null;
 
-        // prepare user data for scoring and stats 
-        this.uid;
-        this.id;
         this.initUser();
         this.initStatsUI();
-        
-        // start the game
-        const gameLevelClasses = [GameLevelDesert, GameLevelWater]
+
+        // Start with the instructions screen
+        this.showInstructionsScreen();
+    }
+
+    static showInstructionsScreen() {
+        const instructionsScreen = new InstructionsScreen(() => {
+            this.showCharacterSelectionScreen();
+        });
+        instructionsScreen.display();
+    }
+
+    static showCharacterSelectionScreen() {
+        const characterSelectionScreen = new CharacterSelectionScreen((selectedCharacter) => {
+            localStorage.setItem('selectedCharacter', selectedCharacter);
+            this.startGame();
+        });
+        characterSelectionScreen.display();
+    }
+
+    static startGame() {
+        const gameLevelClasses = [GameLevelDesert, GameLevelWater];
         new GameControl(this, gameLevelClasses).start();
     }
 
     static initUser() {
         const pythonURL = this.pythonURI + '/api/id';
         fetch(pythonURL, this.fetchOptions)
-            .then(response => {
-                if (response.status !== 200) {
-                    console.error("HTTP status code: " + response.status);
-                    return null;
-                }
-                return response.json();
-            })
+            .then(response => response.ok ? response.json() : Promise.reject("Failed to fetch user ID"))
             .then(data => {
-                if (!data) return;
                 this.uid = data.uid;
-                console.log("User ID:", this.uid);  // Ensure this prints correctly
-    
-                // Now that this.uid is set, fetch from the Java backend
-                const javaURL = this.javaURI + '/rpg_answer/person/' + this.uid;
-                return fetch(javaURL, this.fetchOptions);
+                console.log("User ID:", this.uid);
+                return fetch(`${this.javaURI}/rpg_answer/person/${this.uid}`, this.fetchOptions);
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Spring server response: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(response => response.ok ? response.json() : Promise.reject("Failed to fetch person ID"))
             .then(data => {
-                if (!data) return;
                 this.id = data.id;
-                this.fetchStats(data.id);
+                this.fetchStats(this.id);
             })
-            .catch(error => {
-                console.error("Error:", error);
-            });
+            .catch(error => console.error("Error:", error));
     }
-    
 
     static fetchStats(personId) {
         const endpoints = {
-            balance: this.javaURI + '/rpg_answer/getBalance/' + personId,
-            chatScore: this.javaURI + '/rpg_answer/getChatScore/' + personId,
-            questionsAnswered: this.javaURI + '/rpg_answer/getQuestionsAnswered/' + personId
+            balance: `${this.javaURI}/rpg_answer/getBalance/${personId}`,
+            chatScore: `${this.javaURI}/rpg_answer/getChatScore/${personId}`,
+            questionsAnswered: `${this.javaURI}/rpg_answer/getQuestionsAnswered/${personId}`
         };
 
         for (let [key, url] of Object.entries(endpoints)) {
@@ -81,38 +76,26 @@ class Game {
                 .catch(err => console.error(`Error fetching ${key}:`, err));
         }
     }
-    // called to update scoreboard and player stats
+
     static updateStats(content, questionId, personId) {
-        try {
-            const response = fetch(this.javaURI + '/rpg_answer/submitAnswer', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    content: content,
-                    questionId: questionId,
-                    personId: personId
-                })
+        return fetch(`${this.javaURI}/rpg_answer/submitAnswer`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content, questionId, personId })
+        })
+            .then(response => response.ok ? response.json() : Promise.reject("Failed to update stats"))
+            .then(data => data.score || "Error scoring answer")
+            .catch(error => {
+                console.error("Error submitting answer:", error);
+                return "Error submitting answer";
             });
-
-            if (!response.ok) throw new Error("Network response was not ok");
-
-            const data = response.json();
-
-            return data.score || "Error scoring answer"; // Return score
-
-        } catch (error) {
-            console.error("Error submitting answer:", error);
-            return "Error submitting answer";
-        }
     }
 
     static initStatsUI() {
         const statsContainer = document.createElement('div');
         statsContainer.id = 'stats-container';
         statsContainer.style.position = 'fixed';
-        statsContainer.style.top = '75px'; 
+        statsContainer.style.top = '75px';
         statsContainer.style.right = '10px';
         statsContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
         statsContainer.style.color = 'white';
@@ -126,4 +109,5 @@ class Game {
         document.body.appendChild(statsContainer);
     }
 }
+
 export default Game;
