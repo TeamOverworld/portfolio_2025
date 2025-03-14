@@ -11,6 +11,16 @@ class GameLevel {
     this.gameEnv.gameContainer = gameControl.gameContainer
     this.gameEnv.gameCanvas = gameControl.gameCanvas
     this.gameEnv.gameControl = gameControl
+
+    // Background data
+    const image_src_minecraftscreen = this.gameEnv.path + "/images/gamify/minecraftbackground.png"; // be sure to include the path
+    const image_data_minecraftscreen = {
+    name: 'minecraft',
+    greeting: "Hello, you have been placed in the overworld, find your escape or forever suffer",
+    src: image_src_minecraftscreen,
+    pixels: { height: 580, width: 1038 }
+   };
+
   }
 
   create(GameLevelClass) {
