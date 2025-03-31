@@ -72,17 +72,11 @@ export class Enemy extends Character {
     }
 
     updateMovement(){
-        if (this.state.animation === "right") {
-            this.speed = Math.abs(this.speed)
-        }
-        else if (this.state.animation === "left") {
-            this.speed = -Math.abs(this.speed);
-        }
-        else if (this.state.animation === "idle") {
-            this.speed = 0
-        }
-        else if (this.state.animation === "death") {
-            this.speed = 0
+        if (this.collisionData.touchPoints.other.id === "player") {
+            if (this.collisionData.touchPoints.other.left && this.immune == 0) {  
+                this.speed = -this.speed;  // Reverse speed
+                this.x += 10;  // Move enemy back slightly
+            }
         }
 
         // Move the enemy\
