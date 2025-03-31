@@ -7,7 +7,7 @@ import GameControl from './GameControl.js';
 import GameLevelStarWars from './GameLevelStarWars.js';
 import GameLevelMeteorBlaster from './GameLevelMeteorBlaster.js';
 
-class GameLevelMC {
+class GameLevelOverworld {
   constructor(gameEnv) {
     // Values dependent on this.gameEnv.create()
     let width = gameEnv.innerWidth;
@@ -24,11 +24,11 @@ class GameLevelMC {
     };
 
 
-    // Player data for Chillguy
+    // Player data for Player
     const sprite_src_player = path + "/images/gamify/chillguy.png"; // be sure to include the path
     const PLAYER_SCALE_FACTOR = 5;
     const sprite_data_player = {
-        id: 'Chill Guy',
+        id: 'Player',
         greeting: "Hi I am Chill Guy, the desert wanderer. I am looking for wisdom and adventure!",
         src: sprite_src_player,
         SCALE_FACTOR: PLAYER_SCALE_FACTOR,
@@ -50,13 +50,13 @@ class GameLevelMC {
     };
 
 
-    // NPC data for creeper
-    const sprite_src_creeper = path + "/images/gamify/tux.png"; // be sure to include the path
-    const sprite_greet_creeper = "Hi I am Tux, the Linux mascot.  I am very happy to spend some linux shell time with you!";
-    const sprite_data_creeper = {
-        id: 'Tux',
-        greeting: sprite_greet_creeper,
-        src: sprite_src_creeper,
+    // NPC data for Villager
+    const sprite_src_villager = path + "/gamify/images/villager.png"; // be sure to include the path
+    const sprite_greet_villager = "skibisi villaegr hahaha gimve me emerals plz";
+    const sprite_data_villager = {
+        id: 'Villager',
+        greeting: sprite_greet_villager,
+        src: sprite_src_villager,
         SCALE_FACTOR: 8,  // Adjust this based on your scaling needs
         ANIMATION_RATE: 50,
         pixels: {height: 256, width: 352},
@@ -93,9 +93,9 @@ class GameLevelMC {
 
 
     // NPC Data for villager
-    const sprite_src_villager = path + "/images/gamify/r2_idle.png"; // be sure to include the path
-    const sprite_greet_villager = "Creepa. Awww mannnnn";
-    const sprite_data_villager = {
+    const sprite_src_creeper = path + "/images/gamify/r2_idle.png"; // be sure to include the path
+    const sprite_greet_creeper = "Creepa. Awww mannnnn";
+    const sprite_data_creeper = {
       id: 'Villager',
       greeting: sprite_greet_villager,
       src: sprite_src_villager,
@@ -133,6 +133,27 @@ class GameLevelMC {
           // Call .resume on primary game
           primaryGame.resume();
         }
+      },
+      moveHorizontally: function () {
+        let direction = -1; // 1 for right, -1 for left
+        const step = 4; // Distance to move per interval (speed)
+        const maxDistance = 100; // Maximum distance to move left or right
+        let initialX = this.INIT_POSITION.x;
+    
+        setInterval(() => {
+            this.INIT_POSITION.x += direction * step;
+    
+            // Reverse direction if the guard reaches the max distance
+            if (this.INIT_POSITION.x > initialX + maxDistance || this.INIT_POSITION.x < initialX - maxDistance) {
+                direction *= -1;
+    
+                // Flip the sprite horizontally based on direction
+                const spriteElement = document.getElementById(this.id); // Ensure the sprite has an ID matching its `id` property
+                if (spriteElement) {
+                    spriteElement.style.transform = direction === -1 ? 'scaleX(1)' : 'scaleX(-1)';
+                }
+            }
+        }, this.ANIMATION_RATE);
       }
 
     };
@@ -141,7 +162,7 @@ class GameLevelMC {
     this.classes = [
       { class: Background, data: image_data_sky },
       { class: Player, data: sprite_data_player },
-      { class: Npc, data: sprite_data_villager },
+      { class: Npc, data: sprite_data_creeper },
       { class: Npc, data: sprite_data_creeper },
     ];
     
@@ -149,4 +170,4 @@ class GameLevelMC {
 
 }
 
-export default GameLevelMC;
+export default GameLevelOverworld;
