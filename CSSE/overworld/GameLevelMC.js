@@ -50,13 +50,13 @@ class GameLevelMC {
     };
 
 
-    // NPC data for Tux 
-    const sprite_src_villager = path + "/images/gamify/tux.png"; // be sure to include the path
-    const sprite_greet_villager = "Hi I am Tux, the Linux mascot.  I am very happy to spend some linux shell time with you!";
-    const sprite_data_villager = {
+    // NPC data for creeper
+    const sprite_src_creeper = path + "/images/gamify/tux.png"; // be sure to include the path
+    const sprite_greet_creeper = "Hi I am Tux, the Linux mascot.  I am very happy to spend some linux shell time with you!";
+    const sprite_data_creeper = {
         id: 'Tux',
-        greeting: sprite_greet_villager,
-        src: sprite_src_villager,
+        greeting: sprite_greet_creeper,
+        src: sprite_src_creeper,
         SCALE_FACTOR: 8,  // Adjust this based on your scaling needs
         ANIMATION_RATE: 50,
         pixels: {height: 256, width: 352},
@@ -92,13 +92,13 @@ class GameLevelMC {
       };
 
 
-    // NPC Data for creeper
-    const sprite_src_creeper = path + "/images/gamify/r2_idle.png"; // be sure to include the path
-    const sprite_greet_creeper = "Hi I am R2D2.  Leave this planet and help defent the rebel base on Hoth!";
-    const sprite_data_creeper = {
-      id: 'Creeper',
-      greeting: sprite_greet_creeper,
-      src: sprite_src_creeper,
+    // NPC Data for villager
+    const sprite_src_villager = path + "/images/gamify/r2_idle.png"; // be sure to include the path
+    const sprite_greet_villager = "Creepa. Awww mannnnn";
+    const sprite_data_villager = {
+      id: 'Villager',
+      greeting: sprite_greet_villager,
+      src: sprite_src_villager,
       SCALE_FACTOR: 8,  // Adjust this based on your scaling needs
       ANIMATION_RATE: 100,
       pixels: {width: 505, height: 223},
@@ -111,7 +111,7 @@ class GameLevelMC {
       *  It displays an alert with the greeting message
       */
       reaction: function() {
-        alert(sprite_greet_creeper);
+        alert(sprite_greet_villager);
       },
       /* Interact function
       *  This function is called when the player interacts with the NPC
