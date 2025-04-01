@@ -73,11 +73,11 @@ export class Enemy extends Character {
 
     updateMovement(){
         if (this.collisionData.touchPoints.other.id === "player") {
-            if (this.collisionData.touchPoints.other.left && this.immune == 0) {  
-                this.speed = -this.speed;  // Reverse speed
-                this.x += 10;  // Move enemy back slightly
-            }
-        }
+    if (this.collisionData.touchPoints.other.left && this.immune == 0) {  
+        this.speed = -this.speed;  // Reverse speed
+        this.x += 10;  // Move enemy back slightly
+    }
+}
 
         // Move the enemy\
         this.x += this.speed;
@@ -98,56 +98,37 @@ export class Enemy extends Character {
 
     // Player action on collisions
     collisionAction() {
-        if (this.collisionData.touchPoints.other.id === "finishline") {
-            if (this.state.direction === "left" && this.collisionData.touchPoints.other.right) {
-                this.state.animation = "right";
-                this.state.direction = "right";
-            }
-            else if (this.state.direction === "right" && this.collisionData.touchPoints.other.left) {
-                this.state.animation = "left";
-                this.state.direction = "left";
-            }
-        }
-    
         if (this.collisionData.touchPoints.other.id === "player") {
-            // Collision: Top of Goomba with Bottom of Player
-            //console.log(this.collisionData.touchPoints.other.bottom + 'bottom')
-            //console.log(this.collisionData.touchPoints.other.top + "top")
-            //console.log(this.collisionData.touchPoints.other.right + "right")
-            //console.log(this.collisionData.touchPoints.other.left + "left")
+            // Existing behavior: If the player hits the bottom of the enemy
             if (this.collisionData.touchPoints.other.bottom && this.immune == 0) {
                 GameEnv.invincible = true;
                 GameEnv.goombaBounce = true;
                 this.canvas.style.transition = "transform 1.5s, opacity 1s";
-                this.canvas.style.transition = "transform 2s, opacity 1s";
-                this.canvas.style.transformOrigin = "bottom"; // Set the transform origin to the bottom
-                this.canvas.style.transform = "scaleY(0)"; // Make the Goomba flat
-                this.speed = 0;
+                this.canvas.style.transformOrigin = "bottom";
+                this.canvas.style.transform = "scaleY(0)";
+                this.speed = 0; // Stop movement
                 GameEnv.playSound("goombaDeath");
-
+    
                 setTimeout((function() {
                     GameEnv.invincible = false;
                     this.destroy();
                 }).bind(this), 1500);
     
                 setTimeout(function () {
-                this.destroy();
-                GameEnv.invincible = false;
+                    this.destroy();
+                    GameEnv.invincible = false;
                 }, 2000);
             }
-        }
-
-        if (this.collisionData.touchPoints.other.id === "jumpPlatform") {
-            if (this.state.direction === "left" && this.collisionData.touchPoints.other.right) {
-                this.state.animation = "right";
-                this.state.direction = "right";
-            }
-            else if (this.state.direction === "right" && this.collisionData.touchPoints.other.left) {
-                this.state.animation = "left";
-                this.state.direction = "left";
-            }
+    
+            // New Hack: Stop movement and restore speed after 3 seconds
+            this.speed = 0;  // Stop movement
+    
+            setTimeout(() => {
+                this.speed = 3;  // Restore original speed after 3 seconds
+            }, 3000);  // Time in milliseconds
         }
     }
+    
 }
 
 export default Enemy;
