@@ -92,7 +92,7 @@ class Creeper extends Enemy {
 
         // Restart level after explosion animation
         setTimeout(() => {
-            this.gameEnv.gameControl.restartLevel();
+            this.gameEnv.gameControl.currentLevel.continue = false; 
         }, 3000); // Adjust delay based on explosion animation duration
         }
     }

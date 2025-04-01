@@ -235,10 +235,9 @@ class GameControl {
         this.currentLevelIndex = (this.currentLevelIndex + 1) % this.levelClasses.length;
         this.transitionToLevel();
     }
-
+}
     /**
      * Restart the current level.
-     */
     restartLevel() {
         console.log("Restarting the current level...");
         if (this.currentLevel) {
@@ -248,6 +247,6 @@ class GameControl {
         this.currentLevel = new GameLevel(this);
         this.currentLevel.create(CurrentLevelClass);
     }
-}
+    */
 
 export default GameControl;
