@@ -107,9 +107,8 @@ export class Enemy extends Character {
                 this.state.animation = "left";
                 this.state.direction = "left";
             }
-
         }
-
+    
         if (this.collisionData.touchPoints.other.id === "player") {
             // Collision: Top of Goomba with Bottom of Player
             //console.log(this.collisionData.touchPoints.other.bottom + 'bottom')
@@ -130,9 +129,7 @@ export class Enemy extends Character {
                     GameEnv.invincible = false;
                     this.destroy();
                 }).bind(this), 1500);
-
     
-                // Set a timeout to make GameEnv.invincible false after 2000 milliseconds (2 seconds)
                 setTimeout(function () {
                 this.destroy();
                 GameEnv.invincible = false;
