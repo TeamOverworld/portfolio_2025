@@ -1,5 +1,4 @@
 import Enemy from './Enemy.js';
-import GameEnv from './GameEnv.js';
 import Player from './Player.js';
 
 class Creeper extends Enemy {
