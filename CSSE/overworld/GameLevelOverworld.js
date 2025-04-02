@@ -14,7 +14,7 @@ class GameLevelMC {
     let path = gameEnv.path;
 
     // Background data
-    const image_src_main = path + "/images/gamify/maine_RPG.png"; // be sure to include the path
+    const image_src_main = path + "/gamify/images/maine_RPG.png"; // be sure to include the path
     const image_data_main = {
         name: 'main',
         greeting: "Welcome to the main hub of Overwold.",
@@ -50,7 +50,7 @@ class GameLevelMC {
 
 
     // NPC data for creeper
-    const sprite_src_creeper = path + "/images/gamify/creepa.png"; // be sure to include the path
+    const sprite_src_creeper = path + "/gamify/images/creeper.png"; // be sure to include the path
     const sprite_greet_creeper = "KABOOM!!";
     const sprite_data_creeper = {
         id: 'Creeper',
