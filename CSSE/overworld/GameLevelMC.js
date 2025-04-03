@@ -3,9 +3,8 @@ import Background from './Background.js';
 import Player from './Player.js';
 import Npc from './Npc.js';
 import Quiz from './Quiz.js';
-import GameControl from './GameControl.js';
-import GameLevelMCPlat from './GameLevelMCPlat.js';
-import Enemy from './Enemy.js'; // If you need enemies in this level, import Enemy
+import GameControl from './GameControl.js'; // GameControl is used to switch levels
+import Enemy from './Creeper.js'; // If you need enemies in this level, import Enemy
 
 class GameLevelMC {
   constructor(gameEnv) {
