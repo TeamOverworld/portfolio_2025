@@ -1,7 +1,7 @@
 ---
 layout: base
 title: Adventure Game
-permalink: /gamify/demo
+permalink: /gamify/demoOverworld
 ---
 
 <div id="gameContainer">
