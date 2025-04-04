@@ -38,7 +38,12 @@ class GameControl {
      * Transition to the next level with a fade-out and fade-in effect
      */
     transitionToLevel() {
-        // Create the fade overlay
+        const GameLevelClass = this.levelClasses[this.currentLevelIndex];
+        this.currentLevel = new GameLevel(this);
+        this.currentLevel.create(GameLevelClass);
+        this.gameLoop();
+    }
+        /*
         const fadeOverlay = document.createElement('div');
         fadeOverlay.style.position = 'fixed';
         fadeOverlay.style.top = '0';
