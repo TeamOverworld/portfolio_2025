@@ -1,7 +1,5 @@
 // GameControl.js
 import GameLevel from "./GameLevel.js";
-import GameLevelFinale from "./GameLevelFinale.js";
-import GameLevelBasement from "./GameLevelBasement.js";
 import GameLevelMC from "./GameLevelMC.js";
 
 
@@ -11,7 +9,7 @@ class GameControl {
      * @param {*} path - The path to the game assets
      * @param {*} levelClasses - The classes of for each game level
      */
-    constructor(path, levelClasses = [GameLevelBasement, GameLevelMC, GameLevelFinale]) {
+    constructor(path, levelClasses = [GameLevelMC]) {
         // GameControl properties
         this.path = path;
         this.levelClasses = levelClasses;
