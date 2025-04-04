@@ -1,10 +1,11 @@
 // To build GameLevels, each contains GameObjects from below imports
-import Background from './Background.js';
-import Player from './Player.js';
-import Npc from './Npc.js';
-import Quiz from './Quiz.js';
-import GameControl from './GameControl.js';
+import Background from '../../../CSSE/overworld/Background.js';
+import Player from '../../../CSSE/overworld/Player.js';
+import Npc from '../../../CSSE/overworld/Npc.js';
+import Quiz from '../../../CSSE/overworld/Quiz.js';
+import GameControl from '../../../CSSE/overworld/GameControl.js';
 import GameLevelMCPlat from './GameLevelMCPlat.js';
+import GameLevelMC from '../../../CSSE/overworld/GameLevelMC.js';
 
 class GameLevelMC {
   constructor(gameEnv) {

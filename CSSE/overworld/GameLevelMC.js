@@ -5,6 +5,7 @@ import Npc from './Npc.js';
 import Quiz from './Quiz.js';
 import GameControl from './GameControl.js'; // GameControl is used to switch levels
 import Enemy from './Creeper.js'; // If you need enemies in this level, import Enemy
+import GameLevelMCPlat from './GameLevelMCPlat.js';
 
 class GameLevelMC {
   constructor(gameEnv) {

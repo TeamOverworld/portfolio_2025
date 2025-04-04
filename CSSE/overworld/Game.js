@@ -1,7 +1,6 @@
 import GameControl from './GameControl.js';
 import GameLevelWater from "./GameLevelWater.js";
 import GameLevelDesert from "./GameLevelDesert.js";
-import GameLevelMC from './GameLevelMC.js'; // Main hub level, ensure this is correct based on your file structure
 import InstructionsScreen from "./InstructionsScreen.js";
 import CharacterSelectionScreen from "./CharacterSelectionScreen.js";
 
