@@ -1,13 +1,12 @@
 // To build GameLevels, each contains GameObjects from below imports
-import Background from '../../../CSSE/overworld/Background.js';
-import Player from '../../../CSSE/overworld/Player.js';
-import Npc from '../../../CSSE/overworld/Npc.js';
-import Quiz from '../../../CSSE/overworld/Quiz.js';
-import GameControl from '../../../CSSE/overworld/GameControl.js';
-import GameLevelMCPlat from './GameLevelMCPlat.js';
-import GameLevelMC from '../../../CSSE/overworld/GameLevelMC.js';
+import Background from './Background.js';
+import Player from './Player.js';
+import Npc from './Npc.js';
+import Quiz from './Quiz.js';
+import GameControl from './GameControl.js';
+import Creeper from './Creeper.js'; // Import the Creeper class
 
-class GameLevelMC {
+class GameLevelOverworld {
   constructor(gameEnv) {
     // Values dependent on this.gameEnv.create()
     let width = gameEnv.innerWidth;
@@ -15,7 +14,7 @@ class GameLevelMC {
     let path = gameEnv.path;
 
     // Background data
-    const image_src_main = path + "/gamify/images/maine_RPG.png"; // be sure to include the path
+    const image_src_main = path + "/images/gamify/maine_RPG.png"; // be sure to include the path
     const image_data_main = {
         name: 'main',
         greeting: "Welcome to the main hub of Overwold.",
@@ -50,8 +49,8 @@ class GameLevelMC {
     };
 
 
-    // NPC data for creeper
-    const sprite_src_creeper = path + "/gamify/images/creeper.png"; // be sure to include the path
+    // enemy data for creeper
+    const sprite_src_creeper = path + "/images/gamify/creepa.png"; // be sure to include the path
     const sprite_greet_creeper = "KABOOM!!";
     const sprite_data_creeper = {
         id: 'Creeper',
@@ -68,21 +67,25 @@ class GameLevelMC {
         up: {row: 0, start: 0, columns: 2 },  // This is the stationary npc, down is default 
         hitbox: { widthPercentage: 0.1, heightPercentage: 0.2 },
 
+        //walking area creates the box where the creeper can walk in 
         walkingArea: {
           xMin: width / 10, //left boundary
           xMax: (width * 5 / 7), //right boundary 
           yMin: height / 4, //top boundary 
           yMax: (height * 8 / 15) //bottom boundary
         },
-
+        
+        // speed and direction, the speed is currently set to five and x:1 means its moving right and y:1 means its moving down. these values can be turned negative to mean the opposite
         speed : 5,
         direction: { x: 1, y: 1 },
 
+        // moves the object by adding speed multiplied by direction to INIT_POSITION: if moving right, x increases and if moving down, y increases
         updatePosition: function () {
-          console.log(`Creeper position: (${this.INIT_POSITION.x}, ${this.INIT_POSITION.y})`);
+          // console.log(`Creeper position: (${this.INIT_POSITION.x}, ${this.INIT_POSITION.y})`);
           this.INIT_POSITION.x += this.direction.x * this.speed; // Update x position based on direction and speed
           this.INIT_POSITION.y += this.direction.y * this.speed; // Update y position based on direction and speed
 
+          //boundary checks, this makes it so the creeper bounces off walls when it's collision/hit box collides with the boundaries of the set walking area
           if (this.INIT_POSITION.x <= this.walkingArea.xMin) {
             this.INIT_POSITION.x = this.walkingArea.xMin;
             this.direction.x = 1; 
@@ -100,10 +103,6 @@ class GameLevelMC {
             this.direction.y = -1; 
           }
         },
-
-        reaction: function () {
-          alert(sprite_greet_creeper); 
-        }
       };
 
       setInterval(() => {
@@ -130,7 +129,6 @@ class GameLevelMC {
       },
       interact: function() {
         let primaryGame = gameEnv.gameControl;
-        let levelArray = [GameLevelMCPlat];
         let gameInGame = new GameControl(gameEnv.game, levelArray);
         primaryGame.pause();
         gameInGame.start();
@@ -145,11 +143,11 @@ class GameLevelMC {
       { class: Background, data: image_data_main },
       { class: Player, data: sprite_data_player },
       { class: Npc, data: sprite_data_villager },
-      { class: Npc, data: sprite_data_creeper },
+      { class: Creeper, data: sprite_data_creeper },
     ];
     
   }
 
 }
 
-export default GameLevelMC;
+export default GameLevelOverworld;
