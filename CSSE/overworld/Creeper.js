@@ -1,4 +1,5 @@
 import Enemy from './Enemy.js';
+import GameEnv from './GameEnv.js';
 import Player from './Player.js';
 
 class Creeper extends Enemy {
@@ -91,8 +92,8 @@ class Creeper extends Enemy {
 
         // Restart level after explosion animation
         setTimeout(() => {
-            this.gameEnv.gameControl.currentLevel.continue = false; 
-        }, 3000); // Adjust delay based on explosion animation duration
+            this.gameEnv.gameControl.currentLevel.restart = true;
+        }, 2000); // Adjust delay based on explosion animation duration
         }
     }
 
