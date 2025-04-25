@@ -97,12 +97,13 @@ class GameLevelMC {
             this.INIT_POSITION.y = this.walkingArea.yMax;
             this.direction.y = -1; 
           }
-        },
 
-        reaction: function () {
-          alert(sprite_greet_creeper); 
+          const spriteElement = document.getElementById(this.id);
+          if (spriteElement) { 
+            spriteElement.style.transform = this.direction.x === -1 ? "scaleX(-1)" : "scaleX(1)";
         }
-      };
+      },
+    };
 
       setInterval(() => {
         sprite_data_creeper.updatePosition(); 

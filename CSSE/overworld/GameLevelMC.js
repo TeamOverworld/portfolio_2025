@@ -97,6 +97,8 @@ class GameLevelMC {
       setInterval(() => {
         sprite_data_creeper.updatePosition();
       }, 100); // update position every 100 milliseconds
+
+      
     // NPC Data for villager
     const sprite_src_villager = path + "/gamify/images/villager.png"; // be sure to include the path
     const sprite_greet_villager = "Aur aur aur";
