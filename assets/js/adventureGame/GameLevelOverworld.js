@@ -102,6 +102,12 @@ class GameLevelOverworld {
             this.INIT_POSITION.y = this.walkingArea.yMax;
             this.direction.y = -1; 
           }
+
+          // Flip the sprite horizontally based on direction
+          const spriteElement = document.getElementById(this.id); // Ensure the sprite has an ID matching its `id` property
+          if (spriteElement) {
+              spriteElement.style.transform = direction === -1 ? 'scaleX(1)' : 'scaleX(-1)';
+          }
         },
       };
 
