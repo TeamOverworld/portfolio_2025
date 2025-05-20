@@ -4,6 +4,8 @@ owner_name: John Mortensen
 github_username: nighthawkcoders
 github_repo: "portfolio_2025" 
 baseurl: "/portfolio_2025"
+url: "https://nighthawkcoders.github.io"
+url: "https://nighthawkcoders.github.io/portfolio_2025"
 future: true
 remote_theme: jekyll/minima
 minima:

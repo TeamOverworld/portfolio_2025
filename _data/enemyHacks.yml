@@ -12,6 +12,7 @@ Topics:
       - "Using the enemy's hit box, create a way for it to bounce off the 'walls'"
     subtitle: "Enemy Movement Hack"
     description: "For hack one, we would like you to create a box that your enemy can move in. Configure the size of the boundary box, then create a way for the enemy to bounce off of the walls of that box. For example, that one TV idle screen that plays."
+ 
   - title: "Hack 2: Creating enemy animation"
     image: "/gamify/explosion.png"
     link: "/gamify/explosion"
